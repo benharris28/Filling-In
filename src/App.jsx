@@ -2,6 +2,8 @@ import React from 'react'
 import ShiftListing from './Routes/ShiftListing'
 import ShiftDetailsPage from './Routes/ShiftDetailsPage'
 import Home from './Routes/Home'
+import shifts from './Shifts'
+import clinics from './Clinics'
 import './App.css'
 import {
   Routes,
@@ -11,7 +13,16 @@ import {
 import ApiContext from './ApiContext';
 
 class App extends React.Component {
+  state = {
+    shifts: shifts.shifts,
+    clinics: clinics.clinics
+  }
+
+ 
+  
   render() {
+
+    console.log(this.state)
 
     const value = {
       ...this.state
