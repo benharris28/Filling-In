@@ -1,5 +1,6 @@
 import React from 'react'
 import ShiftListing from './Routes/ShiftListing'
+import ShiftDetailsPage from './Routes/ShiftDetailsPage'
 import Home from './Routes/Home'
 import './App.css'
 import {
@@ -23,6 +24,16 @@ class App extends React.Component {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/shifts" element={<ShiftListing />} />
+             <Route
+           
+              path='/shifts/:id'
+               action={({ params }) => {}}
+              element={<ShiftDetailsPage />}
+               loader={({ params }) => {
+              console.log(params.id); // "hotspur"
+                  
+              }}
+            />
           </Routes>
         </div>
       </ApiContext.Provider>
