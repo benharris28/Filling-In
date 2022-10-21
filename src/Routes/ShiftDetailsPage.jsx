@@ -6,6 +6,7 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import ApplyModal from '../Components/ApplyModal'
 
 
 
@@ -17,7 +18,8 @@ class ShiftDetailsPage extends React.Component {
     shift_id: this.props.router.params.id,
     shift: {},
     clinic: {},
-    skills: []
+    skills: [],
+    showApplyModal: false,
     
   }
 
@@ -49,6 +51,12 @@ class ShiftDetailsPage extends React.Component {
 
     this.setState({
       clinic: currentClinic[0]
+    })
+  }
+
+    setApplyModal = (status) => {
+    this.setState({
+      showApplyModal: status
     })
   }
   
@@ -89,7 +97,8 @@ class ShiftDetailsPage extends React.Component {
           <hr />
           <Row>
             <Col>
-              <Button>
+              <Button
+                onClick={() => this.setApplyModal(true)}>
                 Apply
               </Button>
             </Col>
@@ -100,8 +109,14 @@ class ShiftDetailsPage extends React.Component {
           </Row>
         </Container>
        
-        
-      
+
+        {this.state.showApplyModal &&
+            <ApplyModal
+              show={this.state.showApplyModal}
+              shift={this.state.shift}
+              onHide={() => this.setApplyModal(false)}
+            />
+        }
 
       </div>
     )

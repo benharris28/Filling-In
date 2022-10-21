@@ -4,6 +4,7 @@ import ShiftDetailsPage from './Routes/ShiftDetailsPage'
 import Home from './Routes/Home'
 import shifts from './Shifts'
 import clinics from './Clinics'
+import users from './Users'
 import './App.css'
 import {
   Routes,
@@ -15,7 +16,8 @@ import ApiContext from './ApiContext';
 class App extends React.Component {
   state = {
     shifts: shifts.shifts,
-    clinics: clinics.clinics
+    clinics: clinics.clinics,
+    user: users[0]
   }
 
  
