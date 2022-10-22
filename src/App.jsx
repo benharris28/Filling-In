@@ -2,6 +2,8 @@ import React from 'react'
 import ShiftListing from './Routes/ShiftListing'
 import ShiftDetailsPage from './Routes/ShiftDetailsPage'
 import Home from './Routes/Home'
+import ClinicsDashboard from './Routes/ClinicsDashboard'
+import NavBar from './Components/Navbar'
 import shifts from './Shifts'
 import clinics from './Clinics'
 import users from './Users'
@@ -17,9 +19,13 @@ class App extends React.Component {
   state = {
     shifts: shifts.shifts,
     clinics: clinics.clinics,
-    user: users.users[0]
+    user: users.users[0],
+    clinic: clinics.clinics[0]
   }
 
+  findShiftsforLoggedInUser = () => {
+    
+  }
  
   
   render() {
@@ -33,6 +39,7 @@ class App extends React.Component {
 
     return (
       <ApiContext.Provider value={value}>
+        <NavBar />
         <div className="main">
           <Routes>
             <Route path="/" element={<Home />} />
@@ -42,6 +49,16 @@ class App extends React.Component {
               path='/shifts/:id'
                action={({ params }) => {}}
               element={<ShiftDetailsPage />}
+               loader={({ params }) => {
+              console.log(params.id); // "hotspur"
+                  
+              }}
+            />
+             <Route
+           
+              path='/clinics/:id'
+               action={({ params }) => {}}
+              element={<ClinicsDashboard />}
                loader={({ params }) => {
               console.log(params.id); // "hotspur"
                   

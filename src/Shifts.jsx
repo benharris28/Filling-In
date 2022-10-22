@@ -13,7 +13,8 @@ export default {
         "shift_overview": "This is a blurb about an overview for the shift",
         "requirements": "This is a blurb about test requirements for the shift",
         "created_at": "2020-09-02",
-        "status": "unfilled"
+        "status": "unfilled",
+        "active": "true"
       
         
     },
@@ -30,7 +31,8 @@ export default {
         "shift_overview": "This is a blurb about an overview for the shift",
         "requirements": "This is a blurb about test requirements for the shift",
         "created_at": "2020-09-02",
-        "status": "unfilled"
+        "status": "unfilled",
+         "active": "true"
       
         
     }
