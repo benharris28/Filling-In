@@ -115,6 +115,7 @@ class ShiftDetailsPage extends React.Component {
               show={this.state.showApplyModal}
               shift={this.state.shift}
               onHide={() => this.setApplyModal(false)}
+              
             />
         }
 

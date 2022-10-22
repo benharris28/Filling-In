@@ -17,7 +17,7 @@ class App extends React.Component {
   state = {
     shifts: shifts.shifts,
     clinics: clinics.clinics,
-    user: users[0]
+    user: users.users[0]
   }
 
  
