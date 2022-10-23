@@ -11,29 +11,29 @@ import {
   Link
 } from "react-router-dom";
 
-class ShiftList extends React.Component {
+class ApplicationsList extends React.Component {
   static contextType = ApiContext;
   
   render() {
-    const { shifts } = this.props;
+    const { applications } = this.props;
     
     return (
        <div>
 
          <div>
-           <h4>Your Shift Postings</h4>
+           <h4>Applications For Review</h4>
          </div>
           <div>
-            {shifts.map(shift =>
+            {applications.map(application =>
 
-              <Card className="mb-2" key={shift.id}>
-                <Card.Header>Shift</Card.Header>
+              <Card className="mb-2" key={application.id}>
+                <Card.Header>Applications</Card.Header>
                 <Card.Body>
-                  <Card.Title>{shift.title}</Card.Title>
+                  <Card.Title>Status: {application.fields.status}</Card.Title>
                   <Card.Text>
-                    {shift.clinic_name}
+                 
                   </Card.Text>
-                  <Link to={`/shifts/${shift.id}`}>
+                  <Link to={`/shifts/${application.id}`}>
                     <Button variant="primary">More Details</Button>
                   </Link>
                   
@@ -48,4 +48,4 @@ class ShiftList extends React.Component {
   }
 }
 
-export default ShiftList;
+export default ApplicationsList;

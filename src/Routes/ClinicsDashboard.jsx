@@ -2,7 +2,9 @@ import React from 'react';
 import ApiContext from '../ApiContext'
 import { withRouter } from '../withRouter'
 import ShiftList from '../Components/ShiftList'
+import ApplicationsList from '../Components/ApplicationsList'
 import Container from 'react-bootstrap/Container';
+import ApplicationsApiService from '../Services/application-api-service';
 
 
 class ClinicsDashboard extends React.Component {
@@ -10,11 +12,19 @@ class ClinicsDashboard extends React.Component {
 
   state = {
     clinic_id: this.props.router.params.id,
-    shifts: []
+    shifts: [],
+    applications: []
   }
 
   componentDidMount() {
+    
     this.findClinicShifts()
+    ApplicationsApiService.getApplicationsByClinic(this.state.clinic_id)
+    .then(res => {
+      this.setState({
+        applications: res.records
+      })
+    })
   }
   
   //On this page:
@@ -35,7 +45,7 @@ class ClinicsDashboard extends React.Component {
   }
   
   render() {
-    
+    console.log(this.state)
     
     return (
       <div>
@@ -48,10 +58,14 @@ class ClinicsDashboard extends React.Component {
           <ShiftList 
             shifts={this.state.shifts}
             />
-          {this.state.shifts.map(s => <div>{s.title}</div>)}
+         
         </div>
         <div>
-          This is the applications list
+      
+          <ApplicationsList 
+            applications={this.state.applications}
+            />
+            
         </div>
           </Container>
       </div>
