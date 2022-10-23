@@ -48,13 +48,13 @@ class ClinicsDashboard extends React.Component {
     console.log(this.state)
     
     return (
-      <div>
+      <div className="mt-3">
         <Container>
-        This is the clinic dashboard
-        <div>
-          This is the Clinic details section
+        <h1>Clinic Dashboard</h1>
+        <div className="mb-3">
+          This is the Clinic details section (to be built out)
         </div>
-        <div>
+        <div className="mb-3">
           <ShiftList 
             shifts={this.state.shifts}
             />

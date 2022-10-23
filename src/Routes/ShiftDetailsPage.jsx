@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ApplyModal from '../Components/ApplyModal'
+import Badge from 'react-bootstrap/Badge';
 
 
 
@@ -67,15 +68,15 @@ class ShiftDetailsPage extends React.Component {
    
     const { clinic, shift } = this.state
 
-    const skillList = this.state.skills.map(s => <div>{s}</div>)
+    const skillList = this.state.skills.map(s => <Col xs={4} md={2} lg={1}><Badge bg="info">{s}</Badge></Col>)
     console.log(skillList)
    
     
 
     return (
-      <div>
+      <div className="mt-3">
         <Container>
-          <Row>
+          <Row className="mb-3">
             <div>
                <Button>
               Back
@@ -84,18 +85,29 @@ class ShiftDetailsPage extends React.Component {
            
           </Row>
           <Row>
-            <h4>{shift.title}</h4>
+            <h2>{shift.title}</h2>
+          </Row>
+          <Row className="mb-1">
+            <Col xs={6} md={2} lg={2}>
+              Start Date: {shift.start_date}
+            </Col>
+            <Col xs={6} md={2}>
+              Time: {shift.start_time}
+            </Col>
+          </Row>
+          <Row className="mb-1">
+            <Col xs={6} md={2} lg={2}>
+              Location: {clinic.clinic_city}, {clinic.clinic_province}
+            </Col>
+            <Col xs={6} md={2}>
+              Role: {shift.position}
+            </Col>
           </Row>
           <Row>
-            <Col>
-              {clinic.clinic_city}, {clinic.clinic_province}
-            </Col>
-            <Col>
-              {shift.position}
-            </Col>
+            {skillList}
           </Row>
           <hr />
-          <Row>
+          <Row className="mb-3">
             <Col>
               <Button
                 onClick={() => this.setApplyModal(true)}>
@@ -104,9 +116,15 @@ class ShiftDetailsPage extends React.Component {
             </Col>
             
           </Row>
-          <Row>
-            {skillList}
+          <Row className="mb-3">
+            <h2>Shift Overview</h2>
+            <div>{shift.shift_overview}</div>
           </Row>
+          <Row className="mb-3">
+            <h2>Shift Requirements</h2>
+            <div>{shift.requirements}</div>
+          </Row>
+         
         </Container>
        
 

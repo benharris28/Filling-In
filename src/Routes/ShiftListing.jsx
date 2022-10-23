@@ -29,13 +29,25 @@ class ShiftListing extends React.Component {
     ]
 
     return (
-      <div>
+      <div className="mt-3">
         <Container>
-          Shift Listing Page
+          <div className="mb-4">
+            <h1>Shift Listing Page</h1>
+          </div>
+          
+         
+          <Row>
+            <Col className="border" xs={12} md={3}>
+              <div>
+                Filter
+              </div>
+              
+            </Col>
+            <Col xs={12} md={9}>
           <div>
             {shifts.map(shift =>
 
-              <Card key={shift.id}>
+              <Card className="mb-2" key={shift.id}>
                 <Card.Header>Shift</Card.Header>
                 <Card.Body>
                   <Card.Title>{shift.title}</Card.Title>
@@ -50,6 +62,8 @@ class ShiftListing extends React.Component {
               </Card>
             )}
           </div>
+              </Col>
+            </Row>
         </Container>
 
       </div>
