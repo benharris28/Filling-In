@@ -1,6 +1,7 @@
 import React from 'react';
 import ApiContext from '../ApiContext'
 import Button from 'react-bootstrap/Button';
+import Alert from 'react-bootstrap/Alert';
 import Modal from 'react-bootstrap/Modal';
 import Image from 'react-bootstrap/Image'
 import ApplicationsApiService from '../Services/application-api-service';
@@ -10,6 +11,11 @@ import ApplicationsApiService from '../Services/application-api-service';
 
 class ApplyModal extends React.Component {
   static contextType = ApiContext;
+  
+  state = {
+    applySuccess: false
+    
+  }
 
   handleSubmit = () => {
     //Prepare data to be sent to airtable
@@ -39,6 +45,9 @@ class ApplyModal extends React.Component {
     ApplicationsApiService.createApplication(application)
      .then(res => {
            console.log(res)
+          this.setState({
+            applySuccess: true
+          })
     })
 
   }
@@ -74,12 +83,19 @@ class ApplyModal extends React.Component {
               <li>Details 3</li>
             </ul>
           </div>
+
+          {this.state.applySuccess === false &&
           <div>
             <Button
               onClick={() => this.handleSubmit()}>
               Apply Now
             </Button>
           </div>
+          }
+
+          {this.state.applySuccess && 
+          <Alert>You have successfully applied for the shift!</Alert>
+          }
 
 
 
@@ -87,7 +103,7 @@ class ApplyModal extends React.Component {
 
 
           <hr />
-          <p>A new listing will be available each day</p>
+         
         </Modal.Body>
       </Modal>
 

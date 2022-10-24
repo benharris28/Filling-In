@@ -1,5 +1,6 @@
 import React from 'react'
 import ShiftListing from './Routes/ShiftListing'
+import PostShift from './Routes/PostShift'
 import ShiftDetailsPage from './Routes/ShiftDetailsPage'
 import Home from './Routes/Home'
 import ClinicsDashboard from './Routes/ClinicsDashboard'
@@ -44,6 +45,7 @@ class App extends React.Component {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/shifts" element={<ShiftListing />} />
+            <Route path="/post-shift" element={<PostShift />} />
              <Route
            
               path='/shifts/:id'

@@ -4,6 +4,7 @@ import { withRouter } from '../withRouter'
 import ShiftList from '../Components/ShiftList'
 import ApplicationsList from '../Components/ApplicationsList'
 import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
 import ApplicationsApiService from '../Services/application-api-service';
 
 
@@ -55,6 +56,11 @@ class ClinicsDashboard extends React.Component {
           This is the Clinic details section (to be built out)
         </div>
         <div className="mb-3">
+          <div className="mb-3">
+            <Button>
+              Post a New Shift
+            </Button>
+          </div>
           <ShiftList 
             shifts={this.state.shifts}
             />
