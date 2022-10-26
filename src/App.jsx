@@ -21,7 +21,8 @@ class App extends React.Component {
     shifts: shifts.shifts,
     clinics: clinics.clinics,
     user: users.users[0],
-    clinic: clinics.clinics[0]
+    clinic: clinics.clinics[0],
+    clinic_record_id: 'recs5CqOvbIoy4b9q'
   }
 
   findShiftsforLoggedInUser = () => {

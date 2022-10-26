@@ -6,7 +6,7 @@ const ApplicationsApiService = {
   
 
     createApplication(application) {
-        return fetch(`${config.API_ENDPOINT}`, {
+        return fetch(`${config.API_ENDPOINT}/Applications`, {
           method: 'POST',  
           headers: {
               Authorization: 'Bearer keyP9Ri1WHoSEV5W1',
@@ -21,7 +21,7 @@ const ApplicationsApiService = {
             )
         },
    getApplicationsByClinic(clinic_id) {
-        return fetch(`${config.API_ENDPOINT}?filterByFormula=%7Bclinic_id%7D+%3D+'${clinic_id}'`, {
+        return fetch(`${config.API_ENDPOINT}/Applications?filterByFormula=%7Bclinic_id%7D+%3D+'${clinic_id}'`, {
             headers: {
               Authorization: 'Bearer keyP9Ri1WHoSEV5W1'
             },
