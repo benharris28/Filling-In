@@ -1,5 +1,5 @@
 export default {
-    "shifts": [
+    "allShifts": [
     {
         "id": 1,
         "title": "Shift Test 1",

@@ -1,5 +1,5 @@
 export default {
-    "clinics": [
+    "allClinics": [
     {
         "id": 1,
         "clinic_name": "Test Clinic 1",

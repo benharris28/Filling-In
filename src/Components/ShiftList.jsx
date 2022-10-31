@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import ApiContext from '../ApiContext'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -11,16 +11,13 @@ import {
   Link
 } from "react-router-dom";
 
-class ShiftList extends React.Component {
-  static contextType = ApiContext;
-  
-  render() {
-    const { shifts } = this.props;
-    
-    return (
-       <div>
+function ShiftList(props) {
+  const { shifts } = props;
+  const context = useContext(ApiContext);
 
-         <div>
+  return (
+    <>
+          <div>
            <h4>Your Shift Postings</h4>
          </div>
           <div>
@@ -43,9 +40,11 @@ class ShiftList extends React.Component {
           </div>
       
 
-      </div>
-    )
-  }
+      
+    </>
+  
+)
+   
 }
 
 export default ShiftList;

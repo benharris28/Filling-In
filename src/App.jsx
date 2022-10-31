@@ -1,12 +1,12 @@
-import React from 'react'
+import React, { useState, useContext } from 'react'
 import ShiftListing from './Routes/ShiftListing'
 import PostShift from './Routes/PostShift'
 import ShiftDetailsPage from './Routes/ShiftDetailsPage'
 import Home from './Routes/Home'
 import ClinicsDashboard from './Routes/ClinicsDashboard'
 import NavBar from './Components/Navbar'
-import shifts from './Shifts'
-import clinics from './Clinics'
+import allShifts from './Shifts'
+import allClinics from './Clinics'
 import users from './Users'
 import './App.css'
 import {
@@ -16,30 +16,24 @@ import {
 } from "react-router-dom";
 import ApiContext from './ApiContext';
 
-class App extends React.Component {
-  state = {
-    shifts: shifts.shifts,
-    clinics: clinics.clinics,
-    user: users.users[0],
-    clinic: clinics.clinics[0],
-    clinic_record_id: 'recs5CqOvbIoy4b9q'
-  }
-
-  findShiftsforLoggedInUser = () => {
-    
-  }
- 
+function App() {
+  const [shifts, setShifts] = useState(allShifts);
+  const [clinics, setClinics] = useState(allClinics);
+  const [user, setUser] = useState(users.users);
+  const [clinic_record_id, setClinicRecordId] = useState('recs5CqOvbIoy4b9q');
   
-  render() {
+  const value={
+    shifts,
+    clinics,
+    user,
+    clinic: clinics[0],
+    clinic_record_id
+  }
 
-    console.log(this.state)
-
-    const value = {
-      ...this.state
-
-    }
-
-    return (
+  console.log(shifts)
+  
+  return (
+    <div className="App">
       <ApiContext.Provider value={value}>
         <NavBar />
         <div className="main">
@@ -69,9 +63,12 @@ class App extends React.Component {
             />
           </Routes>
         </div>
+      
       </ApiContext.Provider>
-    )
-  }
+    </div>  
+  )
 }
+
+
 
 export default App;

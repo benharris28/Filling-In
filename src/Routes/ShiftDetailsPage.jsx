@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { Routes, Route, useParams } from 'react-router-dom';
 import ApiContext from '../ApiContext'
 import { withRouter } from '../withRouter'
 import Button from 'react-bootstrap/Button';
@@ -9,72 +10,81 @@ import Col from 'react-bootstrap/Col';
 import ApplyModal from '../Components/ApplyModal'
 import Badge from 'react-bootstrap/Badge';
 
+function ShiftDetailsPage() {
+  let { id } = useParams();
+  const value = useContext(ApiContext);
+  const shifts = value.shifts.allShifts
+  const clinics = value.clinics.allClinics
 
+  const [shift, setShift] = useState({});
+  const [clinic, setClinic] = useState({});
+  const [skills, setSkills] = useState([]);
+  const [applyModal, setApplyModal] = useState(false);
 
+  console.log(id)
+  console.log(shifts)
+  console.log(clinic)
+  console.log(clinics)
+  console.log(shift.clinic_id)
 
-class ShiftDetailsPage extends React.Component {
-  static contextType = ApiContext;
+   
+
+   useEffect(() => {
+     async function setValues(id) {
+       const currentShift = shifts.filter(shift => shift.id == id)
+        console.log(currentShift)
+        console.log(currentShift[0])
+
+        setShift(currentShift[0])
+        setSkills(currentShift[0].skills_required)
+     }
+     
+    setValues(id).then(findClinic(clinics, shift.clinic_id))
   
-  state = {
-    shift_id: this.props.router.params.id,
-    shift: {},
-    clinic: {},
-    skills: [],
-    showApplyModal: false,
-    
-  }
+  
+ 
+   
+}, []);
 
-  componentDidMount() {
-    this.findShift(this.state.shift_id)
-    
-  }
+   useEffect(() => {
+  
+  
+  findClinic(clinics, shift.clinic_id);
+   
+}, [shift]);
 
-  //Match shift ID to clinic to pull in correct details
-
-  findShift = (id) => {
-    const shifts = this.context.shifts
+  const findShift = (id) => {
 
     const currentShift = shifts.filter(shift => shift.id == id)
     console.log(currentShift)
     console.log(currentShift[0])
 
-    this.setState({
-      shift: currentShift[0],
-      skills: currentShift[0].skills_required
-    }, this.findClinic(currentShift[0].clinic_id))
+    setShift(currentShift[0])
+    setSkills(currentShift[0].skills_required)
+
+    
     
   }
 
-  findClinic = (clinic_id) => {
-    const clinics = this.context.clinics
+ 
 
+ 
+
+  const findClinic = (clinics, clinic_id) => {
+   
+    console.log(clinic_id)
     const currentClinic = clinics.filter(clinic => clinic.id == clinic_id)
-
-    this.setState({
-      clinic: currentClinic[0]
-    })
-  }
-
-    setApplyModal = (status) => {
-    this.setState({
-      showApplyModal: status
-    })
-  }
-  
-  render() {
-
-   console.log(this.props)
-    console.log(this.state)
-   
-    const { clinic, shift } = this.state
-
-    const skillList = this.state.skills.map(s => <Col xs={4} md={2} lg={1}><Badge bg="info">{s}</Badge></Col>)
-    console.log(skillList)
-   
+    console.log(currentClinic[0])
+    setClinic(currentClinic[0])
     
+  }
 
-    return (
-      <div className="mt-3">
+   
+
+  const skillList = skills.map(s => <Col xs={4} md={2} lg={1}><Badge bg="info">{s}</Badge></Col>)
+  
+  return (
+    <div className="mt-3">
         <Container>
           <Row className="mb-3">
             <div>
@@ -110,7 +120,7 @@ class ShiftDetailsPage extends React.Component {
           <Row className="mb-3">
             <Col>
               <Button
-                onClick={() => this.setApplyModal(true)}>
+                onClick={() => setApplyModal(true)}>
                 Apply
               </Button>
             </Col>
@@ -128,18 +138,20 @@ class ShiftDetailsPage extends React.Component {
         </Container>
        
 
-        {this.state.showApplyModal &&
+      {applyModal &&
             <ApplyModal
-              show={this.state.showApplyModal}
-              shift={this.state.shift}
-              onHide={() => this.setApplyModal(false)}
+              show={showApplyModal}
+              shift={shift}
+              onHide={() => setApplyModal(false)}
               
             />
         }
 
-      </div>
+      </div> 
     )
-  }
 }
 
-export default withRouter(ShiftDetailsPage);
+
+
+
+export default ShiftDetailsPage;
