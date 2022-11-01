@@ -28,9 +28,9 @@ function ShiftList(props) {
                 <Card.Body>
                   <Card.Title>{shift.title}</Card.Title>
                   <Card.Text>
-                    {shift.clinic_name}
+                    {shift.fields.shift_title}
                   </Card.Text>
-                  <Link to={`/shifts/${shift.id}`}>
+                  <Link to={`/shifts/${shift.fields.id}`}>
                     <Button variant="primary">More Details</Button>
                   </Link>
                   

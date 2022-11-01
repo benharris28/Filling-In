@@ -6,7 +6,7 @@ import ApplicationsList from '../Components/ApplicationsList'
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import ApplicationsApiService from '../Services/application-api-service';
-
+import ShiftApiService from '../Services/shift-api-service';
 
 class ClinicsDashboard extends React.Component {
   static contextType = ApiContext;
@@ -19,7 +19,13 @@ class ClinicsDashboard extends React.Component {
 
   componentDidMount() {
     
-    this.findClinicShifts()
+    ShiftApiService.getShiftsByClinic(this.state.clinic_id)
+    .then(res => {
+      this.setState({
+        shifts: res.records
+      })
+    })
+    
     ApplicationsApiService.getApplicationsByClinic(this.state.clinic_id)
     .then(res => {
       this.setState({
@@ -35,7 +41,7 @@ class ClinicsDashboard extends React.Component {
   //A sidebar to select your view (build later after functionality built)
   findClinicShifts = () => {
     // find all shifts that correspond to the clinic id
-    const shifts = this.context.shifts
+    const shifts = this.context.shifts.allShifts
     const clinicID = this.state.clinic_id
 
     const clinicShifts = shifts.filter(shift => shift.clinic_id == clinicID)

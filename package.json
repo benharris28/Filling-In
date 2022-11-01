@@ -12,6 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@memberstack/react": "^2.0.0",
     "bootstrap": "^5.2.2",
     "react-bootstrap": "^2.5.0",
     "react-router-dom": "^6.4.2"

@@ -21,7 +21,7 @@ const ShiftApiService = {
             )
         },
    getShiftsByClinic(clinic_id) {
-        return fetch(`${config.API_ENDPOINT}?filterByFormula=%7Bclinic_id%7D+%3D+'${clinic_id}'`, {
+        return fetch(`${config.API_ENDPOINT}/Shifts?filterByFormula=%7Bclinic_id%7D+%3D+'${clinic_id}'`, {
             headers: {
               Authorization: 'Bearer keyP9Ri1WHoSEV5W1'
             },
@@ -33,7 +33,7 @@ const ShiftApiService = {
             )
         },
   getShiftById(shift_id) {
-        return fetch(`${config.API_ENDPOINT}?filterByFormula=%7Bclinic_id%7D+%3D+'${clinic_id}'`, {
+        return fetch(`${config.API_ENDPOINT}/Shifts?filterByFormula=%7Bid%7D+%3D+'${shift_id}'`, {
             headers: {
               Authorization: 'Bearer keyP9Ri1WHoSEV5W1'
             },

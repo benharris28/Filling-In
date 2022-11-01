@@ -1,5 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { Routes, Route, useParams } from 'react-router-dom';
+import React from 'react';
 import ApiContext from '../ApiContext'
 import { withRouter } from '../withRouter'
 import Button from 'react-bootstrap/Button';
@@ -9,82 +8,67 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import ApplyModal from '../Components/ApplyModal'
 import Badge from 'react-bootstrap/Badge';
+import ShiftApiService from '../Services/shift-api-service';
 
-function ShiftDetailsPage() {
-  let { id } = useParams();
-  const value = useContext(ApiContext);
-  const shifts = value.shifts.allShifts
-  const clinics = value.clinics.allClinics
 
-  const [shift, setShift] = useState({});
-  const [clinic, setClinic] = useState({});
-  const [skills, setSkills] = useState([]);
-  const [applyModal, setApplyModal] = useState(false);
 
-  console.log(id)
-  console.log(shifts)
-  console.log(clinic)
-  console.log(clinics)
-  console.log(shift.clinic_id)
 
-   
-
-   useEffect(() => {
-     async function setValues(id) {
-       const currentShift = shifts.filter(shift => shift.id == id)
-        console.log(currentShift)
-        console.log(currentShift[0])
-
-        setShift(currentShift[0])
-        setSkills(currentShift[0].skills_required)
-     }
-     
-    setValues(id).then(findClinic(clinics, shift.clinic_id))
+class ShiftDetailsPage extends React.Component {
+  static contextType = ApiContext;
   
-  
- 
-   
-}, []);
-
-   useEffect(() => {
-  
-  
-  findClinic(clinics, shift.clinic_id);
-   
-}, [shift]);
-
-  const findShift = (id) => {
-
-    const currentShift = shifts.filter(shift => shift.id == id)
-    console.log(currentShift)
-    console.log(currentShift[0])
-
-    setShift(currentShift[0])
-    setSkills(currentShift[0].skills_required)
-
-    
+  state = {
+    shift_id: this.props.router.params.id,
+    shift: {
+      fields: {
+        id: '',
+        shift_title: '',
+        position: '',
+        shift_overview: '',
+        requirements: '',
+        start_date: '',
+        start_time: '',
+        skills_required: [],
+        experience_required: '',
+        clinic_name: '',
+        city: ''
+      }
+    },
+    clinic: {},
+    skills: [],
+    showApplyModal: false,
     
   }
 
- 
-
- 
-
-  const findClinic = (clinics, clinic_id) => {
-   
-    console.log(clinic_id)
-    const currentClinic = clinics.filter(clinic => clinic.id == clinic_id)
-    console.log(currentClinic[0])
-    setClinic(currentClinic[0])
+  componentDidMount() {
+    ShiftApiService.getShiftById(this.state.shift_id)
+    .then(res => {
+      this.setState({
+        shift: res.records[0]
+      })
+    })
     
   }
 
-   
 
-  const skillList = skills.map(s => <Col xs={4} md={2} lg={1}><Badge bg="info">{s}</Badge></Col>)
+
+    setApplyModal = (status) => {
+    this.setState({
+      showApplyModal: status
+    })
+  }
   
-  return (
-    <div className="mt-3">
+  render() {
+  console.log(this.state)
+   
+   const skillList = this.state.shift.fields.skills_required.map(s => <Col xs={4} md={2} lg={1}><Badge bg="info">{s}</Badge></Col>)
+    const { clinic, shift } = this.state
+  
+    
+   
+    
+
+    return (
+      <div className="mt-3">
         <Container>
           <Row className="mb-3">
             <div>
@@ -95,22 +79,22 @@ function ShiftDetailsPage() {
            
           </Row>
           <Row>
-            <h2>{shift.title}</h2>
+            <h2>{shift.fields.shift_title}</h2>
           </Row>
           <Row className="mb-1">
             <Col xs={6} md={2} lg={2}>
-              Start Date: {shift.start_date}
+              Start Date: {shift.fields.start_date}
             </Col>
             <Col xs={6} md={2}>
-              Time: {shift.start_time}
+              Time: {shift.fields.start_time}
             </Col>
           </Row>
           <Row className="mb-1">
             <Col xs={6} md={2} lg={2}>
-              Location: {clinic.clinic_city}, {clinic.clinic_province}
+              Location: {shift.fields.city}
             </Col>
             <Col xs={6} md={2}>
-              Role: {shift.position}
+              Role: {shift.fields.position}
             </Col>
           </Row>
           <Row>
@@ -120,7 +104,7 @@ function ShiftDetailsPage() {
           <Row className="mb-3">
             <Col>
               <Button
-                onClick={() => setApplyModal(true)}>
+                onClick={() => this.setApplyModal(true)}>
                 Apply
               </Button>
             </Col>
@@ -128,30 +112,28 @@ function ShiftDetailsPage() {
           </Row>
           <Row className="mb-3">
             <h2>Shift Overview</h2>
-            <div>{shift.shift_overview}</div>
+            <div>{shift.fields.shift_overview}</div>
           </Row>
           <Row className="mb-3">
             <h2>Shift Requirements</h2>
-            <div>{shift.requirements}</div>
+            <div>{shift.fields.requirements}</div>
           </Row>
          
         </Container>
        
 
-      {applyModal &&
+        {this.state.showApplyModal &&
             <ApplyModal
-              show={showApplyModal}
-              shift={shift}
-              onHide={() => setApplyModal(false)}
+              show={this.state.showApplyModal}
+              shift={this.state.shift}
+              onHide={() => this.setApplyModal(false)}
               
             />
         }
 
-      </div> 
+      </div>
     )
+  }
 }
 
-
-
-
-export default ShiftDetailsPage;
+export default withRouter(ShiftDetailsPage);
