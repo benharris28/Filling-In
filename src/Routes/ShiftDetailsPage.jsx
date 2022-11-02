@@ -56,6 +56,10 @@ class ShiftDetailsPage extends React.Component {
       showApplyModal: status
     })
   }
+
+  handleBack = () => {
+    this.props.router.navigate('/shifts')
+  }
   
   render() {
   console.log(this.state)
@@ -72,7 +76,7 @@ class ShiftDetailsPage extends React.Component {
         <Container>
           <Row className="mb-3">
             <div>
-               <Button>
+               <Button onClick={this.handleBack}>
               Back
             </Button>
             </div>

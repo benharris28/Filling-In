@@ -7,6 +7,11 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import ApplicationsApiService from '../Services/application-api-service';
 import ShiftApiService from '../Services/shift-api-service';
+import {
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
 
 class ClinicsDashboard extends React.Component {
   static contextType = ApiContext;
@@ -63,9 +68,10 @@ class ClinicsDashboard extends React.Component {
         </div>
         <div className="mb-3">
           <div className="mb-3">
-            <Button>
-              Post a New Shift
-            </Button>
+            
+            <Link to={`/post-shift`}>
+                    <Button variant="primary">Post a shift</Button>
+                  </Link>
           </div>
           <ShiftList 
             shifts={this.state.shifts}

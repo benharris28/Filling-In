@@ -24,11 +24,14 @@ function ShiftList(props) {
             {shifts.map(shift =>
 
               <Card className="mb-2" key={shift.id}>
-                <Card.Header>Shift</Card.Header>
+                <Card.Header>{shift.fields.position}</Card.Header>
                 <Card.Body>
-                  <Card.Title>{shift.title}</Card.Title>
+                  <Card.Title>{shift.fields.shift_title}</Card.Title>
                   <Card.Text>
-                    {shift.fields.shift_title}
+                    <div>City: {shift.fields.city}</div>
+                    <div>Date: {shift.fields.start_date}</div>
+                    
+                    
                   </Card.Text>
                   <Link to={`/shifts/${shift.fields.id}`}>
                     <Button variant="primary">More Details</Button>
