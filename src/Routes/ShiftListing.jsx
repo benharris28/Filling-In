@@ -60,6 +60,8 @@ class ShiftListing extends React.Component {
                   <Card.Title>{shift.fields.shift_title}</Card.Title>
                   <Card.Text>
                     {shift.fields.clinic_name}
+                    <div>City: {shift.fields.city}</div>
+                    <div>Date: {shift.fields.start_date}</div>
                   </Card.Text>
                   <Link to={`/shifts/${shift.fields.id}`}>
                     <Button variant="primary">More Details</Button>

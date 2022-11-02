@@ -19,7 +19,7 @@ import ApiContext from './ApiContext';
 function App() {
   const [shifts, setShifts] = useState(allShifts);
   const [clinics, setClinics] = useState(allClinics);
-  const [user, setUser] = useState(users.users);
+  const [user, setUser] = useState(users.users[0]);
   const [clinic_record_id, setClinicRecordId] = useState('recs5CqOvbIoy4b9q');
   
   const value={
@@ -30,7 +30,7 @@ function App() {
     clinic_record_id
   }
 
-  console.log(shifts)
+  console.log(value)
   
   return (
     <div className="App">
@@ -53,7 +53,7 @@ function App() {
             />
              <Route
            
-              path='/clinics/:id'
+              path='/clinics'
                action={({ params }) => {}}
               element={<ClinicsDashboard />}
                loader={({ params }) => {

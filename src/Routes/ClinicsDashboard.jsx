@@ -23,15 +23,16 @@ class ClinicsDashboard extends React.Component {
   }
 
   componentDidMount() {
+    const loggedInUser = this.context.user
     
-    ShiftApiService.getShiftsByClinic(this.state.clinic_id)
+    ShiftApiService.getShiftsByClinic(loggedInUser.clinic_id)
     .then(res => {
       this.setState({
         shifts: res.records
       })
     })
     
-    ApplicationsApiService.getApplicationsByClinic(this.state.clinic_id)
+    ApplicationsApiService.getApplicationsByClinic(loggedInUser.clinic_id)
     .then(res => {
       this.setState({
         applications: res.records
@@ -57,7 +58,7 @@ class ClinicsDashboard extends React.Component {
   }
   
   render() {
-    console.log(this.state)
+    console.log(this.context)
     
     return (
       <div className="mt-3">
