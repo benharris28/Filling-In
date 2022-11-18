@@ -1,5 +1,6 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
+import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
@@ -8,10 +9,23 @@ import {
   Route,
   Link
 } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
 
-class NavBar extends React.Component {
-  render() {
+
+function NavBar() {
+  const {
+    user,
+    isAuthenticated,
+    loginWithRedirect,
+    logout,
+  } = useAuth0();
+
+  const logoutWithRedirect = () =>
+    logout({
+      returnTo: window.location.origin,
+    });
+  
     return (
       <div>
        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -32,9 +46,18 @@ class NavBar extends React.Component {
             <Link to={`/clinics`}>
             <Nav.Link href="#deets">My Clinic</Nav.Link>
               </Link>
-            <Nav.Link eventKey={2} href="#memes">
+            {!isAuthenticated &&
+            <Button
+              onClick={() => loginWithRedirect()}>
+              Login
+            </Button>
+            }
+            {isAuthenticated &&
+            <Button
+              onClick={() => logoutWithRedirect()}>
               Logout
-            </Nav.Link>
+            </Button>
+            }
           </Nav>
         </Navbar.Collapse>
         </Container>
@@ -42,7 +65,6 @@ class NavBar extends React.Component {
        
       </div>
     )
-  }
 }
 
 export default NavBar;

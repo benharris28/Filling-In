@@ -1,14 +1,15 @@
 import React from 'react';
 import ApiContext from '../ApiContext'
+import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 
-class Home extends React.Component {
-  render() {
-    return (
-      <div>
-        This is the homepage! Nice, isn't it?
-      </div>
-    )
-  }
+export default function Home() {
+  const { user } = useAuth0();
+
+  console.log(user)
+  
+  return (
+    <div>
+      This is the homepage! Nice, isn't it?
+    </div>
+  )
 }
-
-export default Home;
