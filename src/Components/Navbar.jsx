@@ -25,6 +25,8 @@ function NavBar() {
     logout({
       returnTo: window.location.origin,
     });
+
+  const url = '/clinics'
   
     return (
       <div>
@@ -48,7 +50,7 @@ function NavBar() {
               </Link>
             {!isAuthenticated &&
             <Button
-              onClick={() => loginWithRedirect()}>
+              onClick={() => loginWithRedirect({ target: url})}>
               Login
             </Button>
             }

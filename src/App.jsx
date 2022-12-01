@@ -8,6 +8,7 @@ import NavBar from './Components/Navbar'
 import allShifts from './Shifts'
 import allClinics from './Clinics'
 import users from './Users'
+import TestShiftList from './Components/TestShiftList'
 import './App.css'
 import {
   Routes,
@@ -56,6 +57,16 @@ function App() {
               path='/clinics'
                action={({ params }) => {}}
               element={<ClinicsDashboard />}
+               loader={({ params }) => {
+              console.log(params.id); // "hotspur"
+                  
+              }}
+            />
+             <Route
+           
+              path='/testshifts'
+               action={({ params }) => {}}
+              element={<TestShiftList />}
                loader={({ params }) => {
               console.log(params.id); // "hotspur"
                   
