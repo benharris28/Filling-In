@@ -50,8 +50,8 @@ function NavBar() {
               </Link>
             {!isAuthenticated &&
             <Button
-              onClick={() => loginWithRedirect({ target: url})}>
-              Login
+             onClick={() => loginWithRedirect({ redirectUri: 'https://filling-in.benharris28.repl.co/clinics', signup: true })}>
+              Login as Clinic
             </Button>
             }
             {isAuthenticated &&

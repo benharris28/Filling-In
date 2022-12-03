@@ -5,16 +5,19 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-const providerConfig = {
-  domain: "dev-xohcoo5z64jbrnhh.us.auth0.com",
-  clientId: "0m3jMr4BoW8sYRDlceaEERV2PkisB55t",
-  redirectUri: window.location.origin
-};
+
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   
- <Auth0Provider {...providerConfig}>
+ <Auth0Provider
+      domain="dev-xohcoo5z64jbrnhh.us.auth0.com"
+      clientId="0m3jMr4BoW8sYRDlceaEERV2PkisB55t"
+      providerConfig={{
+        redirectUri: ['https://filling-in.benharris28.repl.co/clinics',  'https://filling-in.benharris28.repl.co/practitioners']
+        
+      }}
+    >
 	<BrowserRouter>
     <App />
   </BrowserRouter>
