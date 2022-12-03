@@ -6,10 +6,17 @@ import App from './App'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
+const onRedirectCallback1 = appState => {
+    // Handle redirect for first URI
+  };
 
+  const onRedirectCallback2 = appState => {
+    // Handle redirect for second URI
+  };
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   
+
  <Auth0Provider
       domain="dev-xohcoo5z64jbrnhh.us.auth0.com"
       clientId="0m3jMr4BoW8sYRDlceaEERV2PkisB55t"
@@ -17,6 +24,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         redirectUri: ['https://filling-in.benharris28.repl.co/clinics',  'https://filling-in.benharris28.repl.co/practitioners']
         
       }}
+   onRedirectCallback={[
+        onRedirectCallback1,
+        onRedirectCallback2,
+      ]}
     >
 	<BrowserRouter>
     <App />
