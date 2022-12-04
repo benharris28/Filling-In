@@ -15,7 +15,7 @@ const ClinicsDashboard2 = () => {
   const [userStatus, setUserStatus] = useState(null);
   const [shifts, setShifts] = useState([]);
   const [applications, setApplications] = useState([]);
-
+console.log(shifts)
   useEffect(() => {
     if (isAuthenticated) {
       // Set up Airtable client

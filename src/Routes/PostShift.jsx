@@ -6,10 +6,14 @@ import { useAuth0 } from '@auth0/auth0-react';
 import Airtable from 'airtable';
 
 const PostShift = () => {
-  const [skillState, setSkillState] = useState({});
+  const [shiftTitle, setShiftTitle] = useState('');
+  const [position, setPosition] = useState('');
+  const [skillState, setSkillState] = useState([]);
   const checklistOptions = ['Laughing Gas', 'Cleaning'];
   const { isAuthenticated, user } = useAuth0();
   const [userRecord, setUserRecord] = useState(null);
+
+  console.log(skillState)
 
   useEffect(() => {
     if (isAuthenticated && user) {
@@ -35,10 +39,41 @@ const PostShift = () => {
     }
   }, [isAuthenticated, user]);
 
-  const handleCheckboxChange = (id) => {
-    const newState = { ...skillState };
-    newState[id] = !newState[id];
+  const handleCheckboxChange = (option) => {
+    const newState = [...skillState];
+    if (!newState.includes(option)) {
+      newState.push(option);
+    } else {
+      newState.splice(newState.indexOf(option), 1);
+    }
     setSkillState(newState);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    // Connect to Airtable
+    const airtable = new Airtable({ apiKey: 'keyP9Ri1WHoSEV5W1' }).base(
+      'appHZw8p3zb6QrFz3'
+    );
+
+   
+
+    // Create new shift record
+    airtable('Shifts')
+      .create(
+        {
+          shift_title: shiftTitle,
+          position: position,
+          skills_required: skillState,
+          user_id: user.sub,
+        },
+        (error) => {
+          if (error) {
+            console.error(error);
+          }
+        }
+      );
   };
 
   if (!isAuthenticated) {
@@ -56,25 +91,49 @@ const PostShift = () => {
   return (
     <div>
       <Container>
-        <Form>
-          <Form.Group>
-            <Form.Label>Shift Title</Form.Label>
-            <Form.Control type="text" placeholder="Eg. General Hygenist Shift..." />
-            <Form.Text className="text-muted">
-              Please keep the title to one line
-            </Form.Text>
-          </Form.Group>
-          <Form.Group>
-            {checklistOptions.map((option, index) => (
-              <Form.Check
-                type="checkbox"
-                label={option}
-                id={option}
-                onChange={(e) => handleCheckboxChange(id)}
-              />
-            ))}
-          </Form.Group>
-        </Form>
+        <Form onSubmit={handleSubmit}>
+  <Form.Group>
+    <Form.Label>Shift Title</Form.Label>
+    <Form.Control
+      type="text"
+      placeholder="Eg. General Hygenist Shift..."
+      value={shiftTitle}
+      onChange={(e) => setShiftTitle(e.target.value)}
+    />
+    <Form.Text className="text-muted">
+      Please keep the title to one line
+    </Form.Text>
+  </Form.Group>
+  <Form.Group>
+    <Form.Label>Position</Form.Label>
+    <Form.Control
+      as="select"
+      value={position}
+      onChange={(e) => setPosition(e.target.value)}
+    >
+      <option value="">-- Select a position --</option>
+      <option value="Hygienist">Hygienist</option>
+      <option value="Dentist">Dentist</option>
+      <option value="Assistant">Assistant</option>
+      <option value="Receptionist">Receptionist</option>
+    </Form.Control>
+  </Form.Group>
+  <Form.Group>
+    {checklistOptions.map((option, index) => (
+      <Form.Check
+        key={index}
+        type="checkbox"
+        label={option}
+        id={option}
+        checked={!!skillState[option]}
+        onChange={(e) => handleCheckboxChange(option)}
+      />
+    ))}
+  </Form.Group>
+  <Button variant="primary" type="submit">
+    Submit
+  </Button>
+</Form>
       </Container>
     </div>
   );
