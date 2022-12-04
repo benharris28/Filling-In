@@ -1,5 +1,6 @@
 import React from 'react';
 import ApiContext from '../ApiContext'
+import { useAuth0 } from '@auth0/auth0-react';
 import { withRouter } from '../withRouter'
 import ShiftList from '../Components/ShiftList'
 import ApplicationsList from '../Components/ApplicationsList'

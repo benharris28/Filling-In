@@ -2,17 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Auth0Provider } from "@auth0/auth0-react";
 import { BrowserRouter } from 'react-router-dom';
+import Airtable from 'airtable';
 import App from './App'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {
+  onRedirectCallback1,
+  onRedirectCallback2,
+  onRedirectCallback3,
+} from './Auth0Calcs';
+
+const airtable = new Airtable({ apiKey: 'keyP9Ri1WHoSEV5W1' }).base('appHZw8p3zb6QrFz3');
 
 
-const onRedirectCallback1 = appState => {
-    // Handle redirect for first URI
-  };
-
-  const onRedirectCallback2 = appState => {
-    // Handle redirect for second URI
-  };
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   
@@ -20,14 +21,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
  <Auth0Provider
       domain="dev-xohcoo5z64jbrnhh.us.auth0.com"
       clientId="0m3jMr4BoW8sYRDlceaEERV2PkisB55t"
-      providerConfig={{
-        redirectUri: ['https://filling-in.benharris28.repl.co/clinics',  'https://filling-in.benharris28.repl.co/practitioners']
+      redirectUri={['https://filling-in.benharris28.repl.co/signup',  'https://filling-in.benharris28.repl.co/practitioners', 'https://filling-in.benharris28.repl.co/clinics']}
         
-      }}
-   onRedirectCallback={[
-        onRedirectCallback1,
-        onRedirectCallback2,
-      ]}
+      
+  
     >
 	<BrowserRouter>
     <App />

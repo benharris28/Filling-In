@@ -3,7 +3,7 @@ import ShiftListing from './Routes/ShiftListing'
 import PostShift from './Routes/PostShift'
 import ShiftDetailsPage from './Routes/ShiftDetailsPage'
 import Home from './Routes/Home'
-import ClinicsDashboard from './Routes/ClinicsDashboard'
+import ClinicsDashboard2 from './Routes/ClinicsDashboard'
 import NavBar from './Components/Navbar'
 import allShifts from './Shifts'
 import allClinics from './Clinics'
@@ -56,7 +56,7 @@ function App() {
            
               path='/clinics'
                action={({ params }) => {}}
-              element={<ClinicsDashboard />}
+              element={<ClinicsDashboard2 />}
                loader={({ params }) => {
               console.log(params.id); // "hotspur"
                   
@@ -67,6 +67,16 @@ function App() {
               path='/testshifts'
                action={({ params }) => {}}
               element={<TestShiftList />}
+               loader={({ params }) => {
+              console.log(params.id); // "hotspur"
+                  
+              }}
+            />
+            <Route
+           
+              path='/signup'
+               action={({ params }) => {}}
+              element={<Home />}
                loader={({ params }) => {
               console.log(params.id); // "hotspur"
                   
