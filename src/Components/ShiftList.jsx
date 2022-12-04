@@ -19,6 +19,7 @@ function ShiftList(props) {
     <>
           <div>
            <h4>Your Shift Postings</h4>
+            {shifts.length < 1 && <div>No shifts to display</div>}
          </div>
           <div>
             {shifts.map(shift =>
