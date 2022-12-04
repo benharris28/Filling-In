@@ -18,6 +18,17 @@ class ApplicationsList extends React.Component {
     const { applications } = this.props;
     
     return (
+      <>
+      {applications.length <1 && 
+        <div>
+           <h4>Applications For Review</h4>
+          <div>No applications to review</div>
+         </div>
+        
+      }
+
+      
+        {applications.length >= 1 &&
        <div>
 
          <div>
@@ -44,6 +55,8 @@ class ApplicationsList extends React.Component {
       
 
       </div>
+        }
+      </>
     )
   }
 }
