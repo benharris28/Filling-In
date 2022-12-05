@@ -1,6 +1,6 @@
 import Airtable from 'airtable';
 
-const getShiftRecords = (userId) => {
+export const getShiftRecords = (userId) => {
   return new Promise((resolve, reject) => {
     // Connect to Airtable
     const airtable = new Airtable({ apiKey: 'keyP9Ri1WHoSEV5W1' }).base(
@@ -22,4 +22,3 @@ const getShiftRecords = (userId) => {
   });
 };
 
-export default getShiftRecords;

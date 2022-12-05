@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 import Airtable from 'airtable';
 import ApplicationsApiService from '../Services/application-api-service';
 import ShiftApiService from '../Services/shift-api-service';
+import { getShiftRecords } from '../Services/AirtableShifts';
 
 const ClinicsDashboard2 = () => {
   const { isAuthenticated, user } = useAuth0();
@@ -37,10 +38,13 @@ console.log(shifts)
         });
 
       // Load shifts and applications data
-      ShiftApiService.getShiftsByClinic(user.sub)
-        .then(res => {
-          setShifts(res.records);
-        });
+      getShiftRecords(user.sub)
+      .then((records) => {
+        setShifts(records);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
 
       ApplicationsApiService.getApplicationsByClinic(user.sub)
         .then(res => {
