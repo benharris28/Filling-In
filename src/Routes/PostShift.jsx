@@ -57,7 +57,7 @@ const PostShift = () => {
       'appHZw8p3zb6QrFz3'
     );
 
-   
+
 
     // Create new shift record
     airtable('Shifts')
@@ -92,48 +92,48 @@ const PostShift = () => {
     <div>
       <Container>
         <Form onSubmit={handleSubmit}>
-  <Form.Group>
-    <Form.Label>Shift Title</Form.Label>
-    <Form.Control
-      type="text"
-      placeholder="Eg. General Hygenist Shift..."
-      value={shiftTitle}
-      onChange={(e) => setShiftTitle(e.target.value)}
-    />
-    <Form.Text className="text-muted">
-      Please keep the title to one line
-    </Form.Text>
-  </Form.Group>
-  <Form.Group>
-    <Form.Label>Position</Form.Label>
-    <Form.Control
-      as="select"
-      value={position}
-      onChange={(e) => setPosition(e.target.value)}
-    >
-      <option value="">-- Select a position --</option>
-      <option value="Hygienist">Hygienist</option>
-      <option value="Dentist">Dentist</option>
-      <option value="Assistant">Assistant</option>
-      <option value="Receptionist">Receptionist</option>
-    </Form.Control>
-  </Form.Group>
-  <Form.Group>
-    {checklistOptions.map((option, index) => (
-      <Form.Check
-        key={index}
-        type="checkbox"
-        label={option}
-        id={option}
-        checked={!!skillState[option]}
-        onChange={(e) => handleCheckboxChange(option)}
-      />
-    ))}
-  </Form.Group>
-  <Button variant="primary" type="submit">
-    Submit
-  </Button>
-</Form>
+          <Form.Group>
+            <Form.Label>Shift Title</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Eg. General Hygenist Shift..."
+              value={shiftTitle}
+              onChange={(e) => setShiftTitle(e.target.value)}
+            />
+            <Form.Text className="text-muted">
+              Please keep the title to one line
+            </Form.Text>
+          </Form.Group>
+          <Form.Group>
+            <Form.Label>Position</Form.Label>
+            <Form.Control
+              as="select"
+              value={position}
+              onChange={(e) => setPosition(e.target.value)}
+            >
+              <option value="">-- Select a position --</option>
+              <option value="Hygienist">Hygienist</option>
+              <option value="Dentist">Dentist</option>
+              <option value="Assistant">Assistant</option>
+              <option value="Receptionist">Receptionist</option>
+            </Form.Control>
+          </Form.Group>
+          <Form.Group>
+            {checklistOptions.map((option, index) => (
+              <Form.Check
+                key={index}
+                type="checkbox"
+                label={option}
+                id={option}
+                
+                onChange={(e) => handleCheckboxChange(option)}
+              />
+            ))}
+          </Form.Group>
+          <Button variant="primary" type="submit">
+            Submit
+          </Button>
+        </Form>
       </Container>
     </div>
   );
