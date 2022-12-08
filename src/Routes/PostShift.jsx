@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import { useAuth0 } from '@auth0/auth0-react';
 import Airtable from 'airtable';
+import { Form, Modal, DateTimeInput } from 'react-bootstrap'
 
 const PostShift = () => {
   const [shiftTitle, setShiftTitle] = useState('');
+  const [date, setDate] = useState(null);
   const [position, setPosition] = useState('');
   const [skillState, setSkillState] = useState([]);
   const checklistOptions = ['Laughing Gas', 'Cleaning'];
@@ -91,8 +92,11 @@ const PostShift = () => {
   return (
     <div>
       <Container>
+        <div className="mt-4">
+          <h1>Post a New Shift</h1>
+        </div>
         <Form onSubmit={handleSubmit}>
-          <Form.Group>
+          <Form.Group className="mb-3">
             <Form.Label>Shift Title</Form.Label>
             <Form.Control
               type="text"
@@ -104,7 +108,7 @@ const PostShift = () => {
               Please keep the title to one line
             </Form.Text>
           </Form.Group>
-          <Form.Group>
+          <Form.Group className="mb-3">
             <Form.Label>Position</Form.Label>
             <Form.Control
               as="select"
@@ -118,18 +122,18 @@ const PostShift = () => {
               <option value="Receptionist">Receptionist</option>
             </Form.Control>
           </Form.Group>
-          <Form.Group>
+          <Form.Group className="mb-3">
             {checklistOptions.map((option, index) => (
               <Form.Check
                 key={index}
                 type="checkbox"
                 label={option}
-                id={option}
-                
+                id={option}  
                 onChange={(e) => handleCheckboxChange(option)}
               />
             ))}
           </Form.Group>
+          
           <Button variant="primary" type="submit">
             Submit
           </Button>
