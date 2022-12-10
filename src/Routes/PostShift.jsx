@@ -3,7 +3,8 @@ import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import { useAuth0 } from '@auth0/auth0-react';
 import Airtable from 'airtable';
-import { Form, Modal, DateTimeInput } from 'react-bootstrap'
+import { Form, Modal } from 'react-bootstrap'
+import dayjs from 'dayjs';
 
 const PostShift = () => {
   const [shiftTitle, setShiftTitle] = useState('');
@@ -53,6 +54,8 @@ const PostShift = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    const formattedDate = dayjs(date).format('YYYY-MM-DDTHH:mm:ssZ');
+
     // Connect to Airtable
     const airtable = new Airtable({ apiKey: 'keyP9Ri1WHoSEV5W1' }).base(
       'appHZw8p3zb6QrFz3'
@@ -68,6 +71,7 @@ const PostShift = () => {
           position: position,
           skills_required: skillState,
           user_id: user.sub,
+          start_date: formattedDate
         },
         (error) => {
           if (error) {
@@ -128,12 +132,21 @@ const PostShift = () => {
                 key={index}
                 type="checkbox"
                 label={option}
-                id={option}  
+                id={option}
                 onChange={(e) => handleCheckboxChange(option)}
               />
             ))}
           </Form.Group>
           
+          <Form.Group className="mb-3">
+            <Form.Label>Date and Time</Form.Label>
+            <Form.Control
+              type="datetime-local"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </Form.Group>
+
           <Button variant="primary" type="submit">
             Submit
           </Button>
