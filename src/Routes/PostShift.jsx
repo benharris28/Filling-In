@@ -1,45 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import { useAuth0 } from '@auth0/auth0-react';
 import Airtable from 'airtable';
-import { Form, Modal } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
+import Form from 'react-bootstrap/Form';
 import dayjs from 'dayjs';
+import ApiContext from '../ApiContext';
+import { v4 } from 'uuid';
 
 const PostShift = () => {
   const [shiftTitle, setShiftTitle] = useState('');
+  const [shiftOverview, setShiftOverview] = useState('');
   const [date, setDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const [position, setPosition] = useState('');
   const [skillState, setSkillState] = useState([]);
   const checklistOptions = ['Laughing Gas', 'Cleaning'];
   const { isAuthenticated, user } = useAuth0();
-  const [userRecord, setUserRecord] = useState(null);
+  const { userRecord } = useContext(ApiContext);
 
   console.log(skillState)
 
-  useEffect(() => {
-    if (isAuthenticated && user) {
-      // Connect to Airtable
-      const airtable = new Airtable({ apiKey: 'keyP9Ri1WHoSEV5W1' }).base(
-        'appHZw8p3zb6QrFz3'
-      );
-
-      // Find user record in Airtable
-      airtable('Users')
-        .select({
-          filterByFormula: `{user_id} = "${user.sub}"`,
-        })
-        .firstPage((error, records) => {
-          if (error) {
-            console.error(error);
-            return;
-          }
-          if (records.length > 0) {
-            setUserRecord(records[0]);
-          }
-        });
-    }
-  }, [isAuthenticated, user]);
+  
 
   const handleCheckboxChange = (option) => {
     const newState = [...skillState];
@@ -55,11 +38,15 @@ const PostShift = () => {
     event.preventDefault();
 
     const formattedDate = dayjs(date).format('YYYY-MM-DDTHH:mm:ssZ');
+    const formattedEndDate = dayjs(endDate).format('YYYY-MM-DDTHH:mm:ssZ');
 
     // Connect to Airtable
     const airtable = new Airtable({ apiKey: 'keyP9Ri1WHoSEV5W1' }).base(
       'appHZw8p3zb6QrFz3'
     );
+
+      // Generate a UUID for the new shift
+    const shiftUUID = v4();
 
 
 
@@ -67,11 +54,16 @@ const PostShift = () => {
     airtable('Shifts')
       .create(
         {
+          uuid: shiftUUID,
           shift_title: shiftTitle,
+          shift_overview: shiftOverview,
           position: position,
           skills_required: skillState,
-          user_id: user.sub,
-          start_date: formattedDate
+          user_id: [userRecord.id],
+          start_date: formattedDate,
+          end_date: formattedEndDate,
+          status: 'Open',
+          active: 'False'
         },
         (error) => {
           if (error) {
@@ -113,6 +105,18 @@ const PostShift = () => {
             </Form.Text>
           </Form.Group>
           <Form.Group className="mb-3">
+            <Form.Label>Shift Overview</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Eg. What is expected..."
+              value={shiftOverview}
+              onChange={(e) => setShiftOverview(e.target.value)}
+            />
+            <Form.Text className="text-muted">
+              Please keep the title to one line
+            </Form.Text>
+          </Form.Group>
+          <Form.Group className="mb-3">
             <Form.Label>Position</Form.Label>
             <Form.Control
               as="select"
@@ -139,11 +143,19 @@ const PostShift = () => {
           </Form.Group>
           
           <Form.Group className="mb-3">
-            <Form.Label>Date and Time</Form.Label>
+            <Form.Label>Set a start date</Form.Label>
             <Form.Control
               type="datetime-local"
               value={date}
               onChange={(e) => setDate(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Set an end date</Form.Label>
+            <Form.Control
+              type="datetime-local"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
             />
           </Form.Group>
 
