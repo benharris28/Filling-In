@@ -11,6 +11,7 @@ import {
   Link
 } from "react-router-dom";
 import ShiftApiService from '../Services/shift-api-service';
+import Airtable from 'airtable';
 
 
 
@@ -26,7 +27,30 @@ class ShiftListing extends React.Component {
         shifts: res.records
       })
     })
-  }
+
+    const airtable = new Airtable({ apiKey: 'keyP9Ri1WHoSEV5W1' }).base('appHZw8p3zb6QrFz3');
+
+      // Get user's status from Airtable
+      airtable('Shifts')
+        .select({
+          filterByFormula: `{uuid} = "${this.state.shift_id}"`
+        })
+        .firstPage((err, records) => {
+          if (err) {
+            console.error(err);
+            return;
+          }
+
+          const record = records[0];
+          
+          this.setState({
+            shift: record
+        });
+        }
+                   );}
+
+    
+  
   
 
   
@@ -63,7 +87,7 @@ class ShiftListing extends React.Component {
                     <div>City: {shift.fields.city}</div>
                     <div>Date: {shift.fields.start_date}</div>
                   </Card.Text>
-                  <Link to={`/shifts/${shift.fields.id}`}>
+                  <Link to={`/shifts/${shift.fields.uuid}`}>
                     <Button variant="primary">More Details</Button>
                   </Link>
                   

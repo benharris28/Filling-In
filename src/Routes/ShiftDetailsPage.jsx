@@ -1,5 +1,6 @@
 import React from 'react';
 import ApiContext from '../ApiContext'
+import Airtable from 'airtable';
 import { withRouter } from '../withRouter'
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -40,14 +41,33 @@ class ShiftDetailsPage extends React.Component {
   }
 
   componentDidMount() {
-    ShiftApiService.getShiftById(this.state.shift_id)
-    .then(res => {
-      this.setState({
-        shift: res.records[0]
-      })
-    })
+    const { userRecord } = this.context
+
+    const airtable = new Airtable({ apiKey: 'keyP9Ri1WHoSEV5W1' }).base('appHZw8p3zb6QrFz3');
+
+      // Get user's status from Airtable
+      airtable('Shifts')
+        .select({
+          filterByFormula: `{uuid} = "${this.state.shift_id}"`
+        })
+        .firstPage((err, records) => {
+          if (err) {
+            console.error(err);
+            return;
+          }
+
+          const record = records[0];
+          
+          this.setState({
+            shift: record
+        });
+        }
+                   );}
+
     
-  }
+    
+    
+  
 
 
 
