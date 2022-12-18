@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Nav from 'react-bootstrap/Nav';
@@ -10,10 +10,16 @@ import {
   Link
 } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import LoginModal from "./Login/LoginModal";
 
 
 
 function NavBar() {
+  const [showModal, setShowModal] = useState(false);
+
+   const handleCloseModal = () => setShowModal(false);
+  const handleShowModal = () => setShowModal(true);
+  
   const {
     user,
     isAuthenticated,
@@ -54,6 +60,12 @@ function NavBar() {
               Login as Clinic
             </Button>
             }
+             {!isAuthenticated &&
+            <Button
+             onClick={handleShowModal}>
+              Signup
+            </Button>
+            }
             {isAuthenticated &&
             <Button
               onClick={() => logoutWithRedirect()}>
@@ -64,6 +76,12 @@ function NavBar() {
         </Navbar.Collapse>
         </Container>
       </Navbar>
+
+        <LoginModal
+        show={showModal}
+        handleClose={handleCloseModal}
+        handleShow={handleShowModal}
+      />
        
       </div>
     )
