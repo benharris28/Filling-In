@@ -3,6 +3,7 @@ import ApiContext from '../ApiContext';
 import { useAuth0 } from '@auth0/auth0-react';
 import { useParams, Link } from 'react-router-dom';
 import ShiftList from '../Components/ShiftList';
+import ClinicDetails from '../Components/ClinicDetails';
 import ApplicationsList from '../Components/ApplicationsList';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
@@ -65,7 +66,7 @@ console.log(shifts)
       <Container>
         <h1>Clinic Dashboard</h1>
         <div className="mb-3">
-          This is the Clinic details section (to be built out)
+          <ClinicDetails />
         </div>
         <div className="mb-3">
           <div className="mb-3">
