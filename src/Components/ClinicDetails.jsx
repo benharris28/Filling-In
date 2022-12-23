@@ -26,11 +26,15 @@ const ClinicDetails = () => {
         {cards.map((card, index) => (
           <Col key={index} xs={12} md={4} lg={2}>
             <Card>
+              <Card.Img src={card.image} thumbnail />
               <Card.Body>
-                <Image src={card.image} thumbnail />
                 <Badge variant="success">Approved</Badge>
-                <Button variant="primary">Upload</Button>
+                <Card.Title>License</Card.Title>
+                
               </Card.Body>
+              <Card.Footer>
+                <Button variant="primary">Upload</Button>
+              </Card.Footer>
             </Card>
           </Col>
         ))}
