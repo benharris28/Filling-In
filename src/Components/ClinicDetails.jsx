@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import ApiContext from '../ApiContext';
 import { Container, Row, Col, Card, Image, Badge, Button } from 'react-bootstrap';
 
 // Connect to context to bring in all required credentials
@@ -7,16 +8,25 @@ import { Container, Row, Col, Card, Image, Badge, Button } from 'react-bootstrap
 // Render an "upload" button if the status is empty for new credentials which will need a file picker
 // Connect to Airtable
 // Post to Airtable when "upload is clicked"
-const ClinicDetails = () => {
 
+
+const ClinicDetails = () => {
+  const { userRecord } = useContext(ApiContext);
+
+  if (!userRecord) {
+    return <div>Loading...</div>;
+  }
+  
   const cards = [  
-    { image: 'https://res.cloudinary.com/dhkmle6ei/image/upload/v1666205828/GET_10_ykcs3x.png' },  
+    { image: userRecord.fields.license[0].thumbnails.full.url, status: userRecord.fields.license_status },  
     { image: 'https://res.cloudinary.com/dhkmle6ei/image/upload/v1666205828/GET_10_ykcs3x.png' },  
     { image: 'https://res.cloudinary.com/dhkmle6ei/image/upload/v1666205828/GET_10_ykcs3x.png' },  
     { image: 'https://res.cloudinary.com/dhkmle6ei/image/upload/v1666205828/GET_10_ykcs3x.png' },  
     { image: 'https://res.cloudinary.com/dhkmle6ei/image/upload/v1666205828/GET_10_ykcs3x.png' },  
     { image: 'https://res.cloudinary.com/dhkmle6ei/image/upload/v1666205828/GET_10_ykcs3x.png' }
   ]
+
+  
 
   return (
     <div>
@@ -28,7 +38,7 @@ const ClinicDetails = () => {
             <Card>
               <Card.Img src={card.image} thumbnail />
               <Card.Body>
-                <Badge variant="success">Approved</Badge>
+                <Badge variant="success">{card.status}</Badge>
                 <Card.Title>License</Card.Title>
                 
               </Card.Body>
